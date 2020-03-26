@@ -3,16 +3,16 @@
 
    <div>
       <b-container>
-         <h3>Home page...!</h3>
+         <h3>Dashboard page...!</h3>
       </b-container>
    </div>
-
+   
 </template>
 
 <script>
 
    export default {
-      name: 'Home',
+      name: 'dashboard',
       components: {
          
       }
