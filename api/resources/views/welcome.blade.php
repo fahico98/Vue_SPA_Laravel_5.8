@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    Laravel and Vue with JWT
                 </div>
 
                 <div class="links">

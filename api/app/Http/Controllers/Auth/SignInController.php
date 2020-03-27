@@ -8,8 +8,7 @@ use App\Http\Controllers\Controller;
 class SignInController extends Controller{
 
    public function __invoke(Request $request){
-      return $token = auth()->attempt($request->only("email", "password")) ?
-         response()->json(compact("token")) :
-         response(null, 401);
+      $token = auth()->attempt($request->only("email", "password"));
+      return $token ? response()->json(compact("token")) : response(null, 401);
    }
 }
