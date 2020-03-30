@@ -1,5 +1,6 @@
 
 <template>
+
    <div>
       <b-container>
          <b-row>
@@ -23,10 +24,13 @@
          </b-row>
       </b-container>
    </div>
+
 </template>
 
 <script>
-   import axios from "axios";
+
+   import { mapActions } from "vuex";
+
    export default {
       data() {
          return {
@@ -37,11 +41,13 @@
          }
       },
       methods: {
-         async submit(){
-            let response = axios.post("/auth/signin", this.form);
-            console.log(response);
+         ...mapActions({
+            signIn: "auth/signIn"
+         }),
+         submit(){
+            this.signIn(this.form);
          }
       }
-  }
-</script>
+   }
 
+</script>
