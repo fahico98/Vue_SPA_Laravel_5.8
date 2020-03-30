@@ -45,7 +45,13 @@
             signIn: "auth/signIn"
          }),
          submit(){
-            this.signIn(this.form);
+            this.signIn(this.form).then(() => {
+               this.$router.replace({
+                  name: "Dashboard"
+               });
+            }).catch(() => {
+               console.log("Failed...!");
+            });
          }
       }
    }

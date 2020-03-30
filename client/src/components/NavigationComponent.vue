@@ -12,10 +12,16 @@
                <!-- Right aligned nav items -->
                <b-navbar-nav class="ml-auto">
 
-                  <b-nav-item :to="{name: 'Home'}">Home</b-nav-item>
-                  <b-nav-item :to="{name: 'Dashboard'}">Dashboard</b-nav-item>
-                  <b-nav-item :to="{name: 'SignIn'}">Sign in</b-nav-item>
-                  <!--<b-nav-item :to="{name: 'SignOut'}">Sign out</b-nav-item>-->
+                  <template v-if="authenticated">
+                     <b-nav-item :to="{name: 'Home'}">Home</b-nav-item>
+                     <b-nav-item :to="{name: 'Dashboard'}">Dashboard</b-nav-item>
+                     <b-nav-item :to="{name: 'Dashboard'}">{{user.name}}</b-nav-item>
+                     <b-nav-item :to="{name: 'SignOut'}">Sign out</b-nav-item>
+                  </template>
+
+                  <template v-else>
+                     <b-nav-item :to="{name: 'SignIn'}">Sign in</b-nav-item>
+                  </template>
 
                   <!--
                   <b-nav-item-dropdown text="Lang" right>
@@ -42,4 +48,17 @@
    </div>
 </template>
 
+<script>
 
+   import { mapGetters } from "vuex";
+   
+   export default {
+      computed: {
+         ...mapGetters({
+            authenticated: "auth/authenticated",
+            user: "auth/user"
+         })
+      }
+   }
+
+</script>
