@@ -1,5 +1,6 @@
 
 <template>
+
    <div>
       <b-navbar toggleable="lg" type="light" variant="warning">
          <b-container>
@@ -46,6 +47,7 @@
          </b-container>
       </b-navbar>
    </div>
+   
 </template>
 
 <script>

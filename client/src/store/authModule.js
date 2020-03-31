@@ -34,13 +34,13 @@ export default{
          return dispatch("attempt", response.data.token);
       },
       async attempt({commit}, token){
+         console.log("1 -> attempt...!");
          commit("setToken", token);
+         console.log("2 -> attempt...!");
          try{
-            let response = await axios("auth/me", {
-               headers: {
-                  "Authorization": "Bearer " + token
-               }
-            });
+            console.log("Before auth/me !");
+            let response = await axios("auth/me");
+            console.log(response);
             commit("setUser", response.data);
          }catch(exception){
             commit("setToken", null);
