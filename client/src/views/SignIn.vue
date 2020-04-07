@@ -41,18 +41,23 @@
          }
       },
       methods: {
+
          ...mapActions({
             signIn: "auth/signIn"
          }),
+
          submit(){
-            this.signIn(this.form).then(() => {
-               this.$router.replace({
-                  name: "Dashboard"
+            this.signIn(this.form)
+               .then(() => {
+                  this.$router.replace({
+                     name: "Dashboard"
+                  });
+               })
+               .catch(() => {
+                  console.log("Sign In Failed...!");
                });
-            }).catch(() => {
-               console.log("Sign In Failed...!");
-            });
          }
+         
       }
    }
 

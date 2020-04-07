@@ -29,18 +29,16 @@ export default{
    },
 
    actions: {
+
       async signIn({dispatch}, credentials){
-         let response = await axios.post("/auth/signin", credentials);
+         let response = await axios.post("auth/signin", credentials);
          return dispatch("attempt", response.data.token);
       },
+
       async attempt({commit}, token){
-         console.log("1 -> attempt...!");
          commit("setToken", token);
-         console.log("2 -> attempt...!");
          try{
-            console.log("Before auth/me !");
-            let response = await axios("auth/me");
-            console.log(response);
+            let response = await axios.get("auth/me");
             commit("setUser", response.data);
          }catch(exception){
             commit("setToken", null);
