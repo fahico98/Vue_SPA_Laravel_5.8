@@ -35,8 +35,9 @@ export default{
          return dispatch("attempt", response.data.token);
       },
 
-      async attempt({commit}, token){
-         commit("setToken", token);
+      async attempt({commit, state}, token){
+         if(token){commit("setToken", token);}
+         if(!state.token){return;}
          try{
             let response = await axios.get("auth/me");
             commit("setUser", response.data);
@@ -44,6 +45,14 @@ export default{
             commit("setToken", null);
             commit("setUser", null);
          }
+      },
+
+      signOut({commit}){
+         return axios.post("auth/signout")
+            .then(() => {
+               commit("setToken", null);
+               commit("setUser", null);
+            });
       }
    }
 };

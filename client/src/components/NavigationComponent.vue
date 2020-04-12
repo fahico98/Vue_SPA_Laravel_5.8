@@ -17,7 +17,7 @@
                      <b-nav-item :to="{name: 'Home'}">Home</b-nav-item>
                      <b-nav-item :to="{name: 'Dashboard'}">Dashboard</b-nav-item>
                      <b-nav-item :to="{name: 'Dashboard'}">{{user.name}}</b-nav-item>
-                     <b-nav-item :to="{name: 'SignOut'}">Sign out</b-nav-item>
+                     <b-nav-item href="#" @click.prevent="signOut">Sign out</b-nav-item>
                   </template>
 
                   <template v-else>
@@ -52,7 +52,7 @@
 
 <script>
 
-   import { mapGetters } from "vuex";
+   import { mapGetters, mapActions } from "vuex";
    
    export default {
       computed: {
@@ -60,6 +60,18 @@
             authenticated: "auth/authenticated",
             user: "auth/user"
          })
+      },
+      methods: {
+         ...mapActions({
+            signOutAction: "auth/signOut"
+         }),
+         signOut(){
+            this.signOutAction().then(() => {
+               this.$router.replace({
+                  name: "Home"
+               });
+            });
+         }
       }
    }
 
