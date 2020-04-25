@@ -4,7 +4,7 @@
    <div>
       <b-navbar toggleable="lg" type="light" variant="warning">
          <b-container>
-            <b-navbar-brand href="#">Bootstrap-Vue</b-navbar-brand>
+            <b-navbar-brand href="#" :to="{name: 'Home'}">Bootstrap-Vue</b-navbar-brand>
 
             <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -17,7 +17,7 @@
                      <b-nav-item :to="{name: 'Home'}">Home</b-nav-item>
                      <b-nav-item :to="{name: 'Dashboard'}">Dashboard</b-nav-item>
                      <b-nav-item :to="{name: 'Dashboard'}">{{user.name}}</b-nav-item>
-                     <b-nav-item href="#" @click.prevent="signOut">Sign out</b-nav-item>
+                     <b-nav-item href="#" v-on:click.prevent="signOut">Sign out</b-nav-item>
                   </template>
 
                   <template v-else>

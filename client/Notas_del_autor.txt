@@ -1,0 +1,147 @@
+
+********** Vuex - Mutaciones **********
+
+Las mutaciones son la unica forma de cambiar el estado de un almacen Vuex. Cada mutación tiene una cadena tipo y una función
+manejadora, que es donde se realiza el cambio en el estado, esta función ademas recibe el estado como primer argumento.
+
+const store = new Vuex.Store({
+   
+   state: {
+      count: 1;
+   },
+
+   mutations: {
+      increment(state){
+         state.count++; // mutate state.
+      }
+   }
+});
+
+No se puede llamar a un manejador de función directamente. Piense en ello mas como un registro de eventos: "Cuando una
+mutación con tipo "increment" es disparada, llama a su manejador de eventos". Para invocar un manejador de mutación debe
+llamar a "store.commit" con su tipo como parametro.
+
+store.commit('increment');
+
+
+
+
+
+********** Vuex - Commits con carga útil (payload) **********
+
+Se puede pasar un argumento adicional a "store.commit", el cual es llamado carga útil (payload).
+
+mutations: {
+   increment(state, n){
+      state.count += n;
+   }
+}
+
+store.commit("increment", 10);
+
+En la mayoría de los casos la carga útil debe ser un objeto para que pueda contener multiples campos, y la mutación
+registrada tambien será muy descriptiva.
+
+// ...
+mutations: {
+   increment(state, payload){
+      state.count += payload.amount;
+   }
+}
+
+store.commit("increment", {
+   amount: 10
+});
+
+
+
+
+
+********** Vuex - Commits al estilo objeto (Object-style) **********
+
+Una forma alternativa de hacer commits a mutaciones es hacerlo de forma directa utilizando un objeto que tiene una propiedad
+tipo.
+
+store.commit({
+   type: "increment",
+   amount: 10
+});
+
+Cuando usamos un commit al estilo objeto, el objeto entero será pasado como la carga útil a la función manejadora de la
+mutación, la función manejadora permanecerá igual. 
+
+
+
+
+
+***********************************************************************
+
+Investigar mas sobre: Mutations Follow Vue's Reactivity Rules.
+
+***********************************************************************
+
+
+
+
+
+***********************************************************************
+
+Investigar mas sobre: Using Constants for Mutation Types.
+
+***********************************************************************
+
+
+
+
+
+********** Vuex - Las mutaciones deben ser síncronas **********
+
+Una importante regla para recordar es que las funciones manejadoras de las mutaciones deben ser síncronas, por que?
+Considere el siguiente código:
+
+mutations: {
+   someMutation(state){
+      api.callAsyncMethod(() => {
+         state.count++;
+      });
+   }
+}
+
+Ahora imagine que estamos depurando la aplicación y observando los registros de mutación del devtool, para cada mutación
+registrada, el devtool necesitará una captura de un "antes" y un "despues" de el estado. Sin embargo, el retorno de llamada
+(callback) asíncrona dentro de la mutación de ejemplo hace que sea imposible: El retorno de llamada no ha sido llamado aún
+cuando la mutación es commiteada, y no hay forma de que el devtool, no hay forma de que el devtool sepa cuando se llamará
+realmente al retorno de llamada. Cualquier cambio de estado realizado en el retorno de llamada es escencialmente
+inrastreable.
+
+
+
+
+
+********** Vuex - Commiteando mutaciones en componentes Vue **********
+
+Se pueden commitear mutaciones en componente con "this.$store.commit('xxx')", o usar el ayudante "mapMutations" que asigna
+métodos de componentes a llamadas "store.commit" (requier inyección del almacen raiz).
+
+import { mapMutations } from 'vuex'
+
+export default {
+
+  // ...
+
+  methods: {
+
+    ...mapMutations([
+      'increment', // map "this.increment()" to "this.$store.commit('increment')".
+
+      // "mapMutations" also supports payloads:
+      "incrementBy" // map "this.incrementBy(amount)" to "this.$store.commit('incrementBy', amount)".
+    ]),
+
+    ...mapMutations({
+      add: 'increment' // map "this.add()" to "this.$store.commit('increment')"
+    })
+  }
+}
+
+Nota: Investigar mas sobre mapMutations.

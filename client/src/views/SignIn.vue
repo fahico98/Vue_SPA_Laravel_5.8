@@ -5,7 +5,7 @@
       <b-container>
          <b-row>
             <b-col sm="12" md="6" class="mx-auto">
-               <b-form @submit.prevent="submit">
+               <b-form v-on:submit.prevent="submit">
                   
                   <b-form-group label="Email address:" label-for="inputEmail">
                      <b-form-input id="inputEmail" v-model="form.email" type="email" required
@@ -32,20 +32,18 @@
    import { mapActions } from "vuex";
 
    export default {
-      data() {
+      data(){
          return {
             form: {
                email: '',
                password: ''
             }
-         }
+         };
       },
       methods: {
-
          ...mapActions({
-            signIn: "auth/signIn"
+            signIn: "auth/signIn" // Llamar a "this.signIn()" es igual a llamar a "this.$store.dispatch('signIn')".
          }),
-
          submit(){
             this.signIn(this.form)
                .then(() => {
@@ -53,11 +51,10 @@
                      name: "Dashboard"
                   });
                })
-               .catch(() => {
-                  console.log("Sign In Failed...!");
+               .catch((error) => {
+                  console.log(error);
                });
          }
-         
       }
    }
 

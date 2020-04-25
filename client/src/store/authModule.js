@@ -30,6 +30,14 @@ export default{
 
    actions: {
 
+      /**
+       * Las acciones reciben como parametro un objeto llamado "context" que tiene las propiedades "commit", "getters",
+       * "state" y "dispatch", sin embargo, para los argumentos de las acciones "signIn", "attempt" y "signOut" se esta
+       * usando la funcionalidad "Distructurin" de ES6 (ES2015).
+       * 
+       * Fuente: https://github.com/lukehoban/es6features#destructuring.
+       */
+
       async signIn({dispatch}, credentials){
          let response = await axios.post("auth/signin", credentials);
          return dispatch("attempt", response.data.token);
